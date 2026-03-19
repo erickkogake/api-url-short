@@ -1,98 +1,104 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🔗 URL Short API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Uma API RESTful construída com o **NestJS** e focada em escalabilidade, tipagem forte e documentação automatizada.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🚀 Tecnologias e Ferramentas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+* **Framework:** [NestJS] (TypeScript)
+* **ORM:** [Prisma]
+* **Banco de Dados:** [PostgreSQL]
+* **Documentação:** [Swagger/OpenAPI]
+* **Containerização:** [Docker] & Docker Compose
+* **Validação:** Class-Validator & DTOs
+* **Testes:** Jest & Supertest (Unitários e E2E)
 
-## Project setup
+---
+
+## 🛠️ Funcionalidades
+
+* **Encurtamento de URLs:** Geração de códigos únicos para URLs longas.
+* **Estatísticas em Tempo Real:** Contabilização automática de acessos ao recuperar a URL original.
+* **Gestão Completa (CRUD):** Endpoints para criar, buscar, atualizar e deletar URLs.
+* **Validação de Dados:** Uso de DTOs para garantir que apenas dados válidos entrem no sistema.
+* **Documentação Interativa:** Interface Swagger para testar a API diretamente pelo navegador.
+* **Qualidade de Código:** Suíte completa de testes unitários e de integração (E2E).
+
+---
+
+## 🚦 Como Executar o Projeto
+
+### 🐳 Via Docker
+
+Certifique-se de ter o **Docker** e o **Docker Compose** instalados em sua máquina.
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone <repo>
+    cd api-url-short
+    ```
+
+2.  **Suba a aplicação:**
+    ```bash
+    docker compose up --build
+    ```
+
+3.  **Acesse:**
+    * **API:** [http://localhost:3000/api](http://localhost:3000/api)
+    * **Swagger (Documentação):** [http://localhost:3000/docs](http://localhost:3000/docs)
+
+---
+
+### 💻 Execução Local
+
+Caso prefira rodar sem o container da aplicação:
+
+1.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
+
+2.  **Configure as variáveis de ambiente:**
+    ```bash
+    cp .env.example .env
+    ```
+
+3.  **Suba apenas o banco de dados:**
+    ```bash
+    docker compose up -d postgres
+    ```
+
+4.  **Prepare o Banco de Dados (Migrations):**
+    ```bash
+    npx prisma generate
+    npx prisma migrate dev
+    ```
+
+5.  **Inicie a aplicação:**
+    ```bash
+    npm run start:dev
+    ```
+
+---
+
+## 📑 Endpoints da API
+
+| Método   | Endpoint                        | Descrição                                  |
+| :------- | :------------------------------ | :----------------------------------------- |
+| `POST`   | `/api/shorten`                  | Cria uma nova URL encurtada                |
+| `GET`    | `/api/shorten/:shortCode`       | Busca a URL original e contabiliza acesso  |
+| `PUT`    | `/api/shorten/:shortCode`       | Atualiza o destino de uma URL encurtada    |
+| `DELETE` | `/api/shorten/:shortCode`       | Remove uma URL encurtada do sistema        |
+| `GET`    | `/api/shorten/:shortCode/stats` | Obtém detalhes e estatísticas de acesso    |
+
+---
+
+## 🧪 Testes
 
 ```bash
-$ npm install
-```
+# Testes Unitários
+npm run test
 
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Testes End-to-End (E2E)
+npm run test:e2e
