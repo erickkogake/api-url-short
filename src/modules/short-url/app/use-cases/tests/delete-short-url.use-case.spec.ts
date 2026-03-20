@@ -20,18 +20,20 @@ describe('DeleteShortUrlUseCase', () => {
   });
 
   it('should delete short url when it exists', async () => {
-    repository.deleteByShortCode.mockResolvedValue(true);
+    const deleteMock = repository.deleteByShortCode.mockResolvedValue(true);
 
     await expect(useCase.execute('abc123')).resolves.toBeUndefined();
 
-    expect(repository.deleteByShortCode).toHaveBeenCalledWith('abc123');
+    expect(deleteMock).toHaveBeenCalledWith('abc123');
   });
 
   it('should throw when short url does not exist', async () => {
-    repository.deleteByShortCode.mockResolvedValue(false);
+    const deleteMock = repository.deleteByShortCode.mockResolvedValue(false);
 
     await expect(useCase.execute('abc123')).rejects.toBeInstanceOf(
       ResourceNotFoundException,
     );
+
+    expect(deleteMock).toHaveBeenCalledWith('abc123');
   });
 });

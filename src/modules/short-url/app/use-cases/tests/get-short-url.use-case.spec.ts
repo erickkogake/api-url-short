@@ -42,11 +42,12 @@ describe('GetShortUrlUseCase', () => {
         registerAccess: jest.fn(),
       });
 
-    repository.incrementAccessCount.mockResolvedValue();
+    const incrementAccessCountMock =
+      repository.incrementAccessCount.mockResolvedValue();
 
     const result = await useCase.execute('abc123');
 
-    expect(repository.incrementAccessCount).toHaveBeenCalledWith('abc123');
+    expect(incrementAccessCountMock).toHaveBeenCalledWith('abc123');
     expect(result.accessCount).toBe(1);
   });
 

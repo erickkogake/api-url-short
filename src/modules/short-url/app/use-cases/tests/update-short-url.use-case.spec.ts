@@ -20,7 +20,7 @@ describe('UpdateShortUrlUseCase', () => {
   });
 
   it('should update short url when it exists', async () => {
-    repository.updateUrl.mockResolvedValue({
+    const updateUrlMock = repository.updateUrl.mockResolvedValue({
       id: '1',
       url: 'https://updated.com',
       shortCode: 'abc123',
@@ -36,15 +36,12 @@ describe('UpdateShortUrlUseCase', () => {
       url: 'https://updated.com',
     });
 
-    expect(repository.updateUrl).toHaveBeenCalledWith(
-      'abc123',
-      'https://updated.com',
-    );
+    expect(updateUrlMock).toHaveBeenCalledWith('abc123', 'https://updated.com');
     expect(result.url).toBe('https://updated.com');
   });
 
   it('should throw when short url does not exist', async () => {
-    repository.updateUrl.mockResolvedValue(null);
+    const updateUrlMock = repository.updateUrl.mockResolvedValue(null);
 
     await expect(
       useCase.execute({
@@ -52,5 +49,7 @@ describe('UpdateShortUrlUseCase', () => {
         url: 'https://updated.com',
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundException);
+
+    expect(updateUrlMock).toHaveBeenCalledWith('abc123', 'https://updated.com');
   });
 });

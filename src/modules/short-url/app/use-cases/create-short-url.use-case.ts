@@ -34,9 +34,7 @@ export class CreateShortUrlUseCase {
         });
       }
 
-      this.logger.warn(
-        `Conflito de código curto ${attempt}: ${shortCode}`,
-      );
+      this.logger.warn(`Conflito de código curto ${attempt}: ${shortCode}`);
     }
 
     throw new ShortCodeGenerationException();

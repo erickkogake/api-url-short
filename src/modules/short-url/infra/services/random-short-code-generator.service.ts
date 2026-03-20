@@ -2,9 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ShortCodeGeneratorService } from '../../domain/services/short-code-generator.service';
 
 @Injectable()
-export class RandomShortCodeGeneratorService
-  implements ShortCodeGeneratorService
-{
+export class RandomShortCodeGeneratorService implements ShortCodeGeneratorService {
   private readonly chars =
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 

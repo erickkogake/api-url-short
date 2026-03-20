@@ -10,8 +10,7 @@ export class DeleteShortUrlUseCase {
   ) {}
 
   async execute(shortCode: string): Promise<void> {
-    const deleted =
-      await this.shortUrlRepository.deleteByShortCode(shortCode);
+    const deleted = await this.shortUrlRepository.deleteByShortCode(shortCode);
 
     if (!deleted) {
       throw new ResourceNotFoundException('Short URL');

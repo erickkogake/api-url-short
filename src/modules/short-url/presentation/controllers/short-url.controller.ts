@@ -71,8 +71,7 @@ export class ShortUrlController {
   @Get(':shortCode')
   @ApiOperation({
     summary: 'Retrieve original URL by short code',
-    description:
-      'Returns the original URL data and increments access count',
+    description: 'Returns the original URL data and increments access count',
   })
   @ApiParam({
     name: 'shortCode',

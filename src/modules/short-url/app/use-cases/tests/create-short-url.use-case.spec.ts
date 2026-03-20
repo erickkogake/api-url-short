@@ -26,9 +26,9 @@ describe('CreateShortUrlUseCase', () => {
   });
 
   it('should create a short url with unique code', async () => {
-    generator.generate.mockReturnValue('abc123');
-    repository.existsByShortCode.mockResolvedValue(false);
-    repository.create.mockResolvedValue({
+    const generateMock = generator.generate.mockReturnValue('abc123');
+    const existsMock = repository.existsByShortCode.mockResolvedValue(false);
+    const createMock = repository.create.mockResolvedValue({
       id: '1',
       url: 'https://google.com',
       shortCode: 'abc123',
@@ -43,9 +43,9 @@ describe('CreateShortUrlUseCase', () => {
       url: 'https://google.com',
     });
 
-    expect(generator.generate).toHaveBeenCalledWith(6);
-    expect(repository.existsByShortCode).toHaveBeenCalledWith('abc123');
-    expect(repository.create).toHaveBeenCalledWith({
+    expect(generateMock).toHaveBeenCalledWith(6);
+    expect(existsMock).toHaveBeenCalledWith('abc123');
+    expect(createMock).toHaveBeenCalledWith({
       url: 'https://google.com',
       shortCode: 'abc123',
     });
@@ -53,7 +53,7 @@ describe('CreateShortUrlUseCase', () => {
   });
 
   it('should retry when generated code already exists', async () => {
-    generator.generate
+    const generateMock = generator.generate
       .mockReturnValueOnce('abc123')
       .mockReturnValueOnce('xyz789');
 
@@ -61,7 +61,7 @@ describe('CreateShortUrlUseCase', () => {
       .mockResolvedValueOnce(true)
       .mockResolvedValueOnce(false);
 
-    repository.create.mockResolvedValue({
+    const createMock = repository.create.mockResolvedValue({
       id: '1',
       url: 'https://google.com',
       shortCode: 'xyz789',
@@ -76,8 +76,8 @@ describe('CreateShortUrlUseCase', () => {
       url: 'https://google.com',
     });
 
-    expect(generator.generate).toHaveBeenCalledTimes(2);
-    expect(repository.create).toHaveBeenCalledWith({
+    expect(generateMock).toHaveBeenCalledTimes(2);
+    expect(createMock).toHaveBeenCalledWith({
       url: 'https://google.com',
       shortCode: 'xyz789',
     });
@@ -85,13 +85,13 @@ describe('CreateShortUrlUseCase', () => {
   });
 
   it('should throw when unable to generate unique code', async () => {
-    generator.generate.mockReturnValue('abc123');
+    const generateMock = generator.generate.mockReturnValue('abc123');
     repository.existsByShortCode.mockResolvedValue(true);
 
     await expect(
       useCase.execute({ url: 'https://google.com' }),
     ).rejects.toBeInstanceOf(ShortCodeGenerationException);
 
-    expect(generator.generate).toHaveBeenCalledTimes(5);
+    expect(generateMock).toHaveBeenCalledTimes(5);
   });
 });
