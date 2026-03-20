@@ -1,4 +1,4 @@
-import { ShortUrl } from 'src/generated/prisma/client';
+import { ShortUrl } from '@prisma/client';
 import { ShortUrlEntity } from '../../domain/entities/short-url.entity';
 
 export class ShortUrlMapper {
